@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function Basket({ cart, setCart }) {
 
@@ -8,6 +8,8 @@ function Basket({ cart, setCart }) {
     setCart(removedItem);
    }
  
+   const navigate = useNavigate();
+
   return (
          <div className="flex flex-col gap-4 items-center justify-evenly">
          {
@@ -40,10 +42,10 @@ function Basket({ cart, setCart }) {
         { (cart.length == 0) &&
          (<div className="h-60 flex justify-center items-center flex-col">
            <h1 className=" text-2xl py-10 ">Your cart is Empty....</h1>
-           <Link to={"/"} className="bg-yellow-300 rounded px-4 py-1.5 border border-black text-bolder text-blue mr-2">Go to Home page</Link>
+           <div className="bg-yellow-300 rounded px-4 py-1.5 border border-black text-bolder cursor-pointer text-blue mr-2" onClick={()=>{ navigate(-1) }}>Go back</div>
          </div>)
         }
-
+ 
        </div>
   )
 }

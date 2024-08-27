@@ -1,21 +1,8 @@
 /* eslint-disable react/prop-types */
-
 import { Link } from "react-router-dom"
 
+function Product({ items, addToCart }) {
 
-function Product({ items, setCart, cart }) {
-
-  const addToCart = (id, title, imgSrc, discription, price) => {
-    const obj = {
-      id: id,
-      title: title,
-      imgSrc: imgSrc,
-      discription: discription,
-      price: price
-    }
-
-    setCart([...cart, obj]);
-  }
 
   return (
     <div className="mx-auto flex justify-evenly flex-wrap">
