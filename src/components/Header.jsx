@@ -7,6 +7,7 @@ function Header({ cart, setData }) {
 
   const navigate = useNavigate();
   const [searchedTerm, setSearchedTerm] = useState("");
+  const [searchedLocation, setSearchedLocation] = useState("");
   const itemsArry = document.getElementsByClassName("items");
  
 // function for backgroundColor changer of filter btn
@@ -40,12 +41,14 @@ function Header({ cart, setData }) {
 
   const searchedTermHandler = (e) => {
     setSearchedTerm(e.target.value);
+    setSearchedLocation(`/SearchItem/${searchedTerm}`)
   }
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
     navigate(`/SearchItem/${searchedTerm}`);
     setSearchedTerm('');
+    setSearchedLocation(`/SearchItem/${searchedTerm}`)
   }
 
   return (
@@ -54,10 +57,10 @@ function Header({ cart, setData }) {
       <nav className="width-full bg-slate-500 flex justify-between items-center px-[5%] py-3">
         <Link to={"/"} className="text-white text-bold text-xl sm:text-4xl">E-Cart</Link>
 
-        {(useLocation().pathname == '/') &&
-        <form className="w-[60%]" onSubmit={formSubmitHandler}>
+        {(useLocation().pathname == '/') || (useLocation().pathname == searchedLocation) ?
+        (<form className="w-[60%]" onSubmit={formSubmitHandler}>
           <input className="w-full px-2 py-1 sm:px-3 sm:py-2 outline-none rounded" placeholder="Search..." value={searchedTerm} onChange={searchedTermHandler} />
-        </form>
+        </form>) : null
         }
         
         <Link to={"/Cart"}>
@@ -74,7 +77,7 @@ function Header({ cart, setData }) {
         </Link>
       </nav>
 
-      {(useLocation().pathname == '/') &&
+      {(useLocation().pathname == '/') && 
 
         (<div className="width-full bg-slate-700 flex justify-evenly items-center py-4 overflow-x-scroll">
           <div className="items" onClick={ noFilterHandler }>No Filter</div>
@@ -85,7 +88,7 @@ function Header({ cart, setData }) {
           <div className="items" onClick={() => { filterPrice(20000, 5) }}>Under 20,000</div>
           <div className="items" onClick={() => { filterPrice(40000, 6) }}>Under 40,000</div>
           <div className="items" onClick={() => { filterPrice(200000, 7) }}>Under 200,000</div>
-        </div>)
+        </div>) 
       }
     </header>
   )
