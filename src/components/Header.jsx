@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { items } from "./Data";
@@ -41,7 +42,6 @@ function Header({ cart, setData }) {
 
   const searchedTermHandler = (e) => {
     setSearchedTerm(e.target.value);
-    setSearchedLocation(`/SearchItem/${searchedTerm}`)
   }
 
   const formSubmitHandler = (e) => {
