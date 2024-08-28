@@ -5,21 +5,38 @@ import { useState } from "react";
 
 function Header({ cart, setData }) {
 
-
-  //Filter purpose code
-  const filterCategory = (category) => {
-    const filteredData = items.filter(item => item.category == category);
-    setData(filteredData);
-  }
-
-  const filterPrice = (price) => {
-    const filteredData = items.filter(item => item.price <= price);
-    setData(filteredData);
-  }
-
-  //Search function code
   const navigate = useNavigate();
   const [searchedTerm, setSearchedTerm] = useState("");
+  const itemsArry = document.getElementsByClassName("items");
+ 
+// function for backgroundColor changer of filter btn
+  const bgActiveness = (i) => {
+    for(let x of itemsArry){
+      x.style.background = null;
+    }
+    itemsArry[i].style.background = "#AABBCC85";
+  }
+
+//Filter purpose code
+  const noFilterHandler = () =>{
+    setData(items);
+    for(let x of itemsArry){
+      x.style.background = null;
+    }
+  }
+
+  const filterCategory = (category, i) => {
+    const filteredData = items.filter(item => item.category == category);
+    setData(filteredData);
+    bgActiveness(i)
+  }
+
+
+  const filterPrice = (price, i) => {
+    const filteredData = items.filter(item => item.price <= price);
+    setData(filteredData);
+    bgActiveness(i)
+  }
 
   const searchedTermHandler = (e) => {
     setSearchedTerm(e.target.value);
@@ -30,7 +47,6 @@ function Header({ cart, setData }) {
     navigate(`/SearchItem/${searchedTerm}`);
     setSearchedTerm('');
   }
-
 
   return (
 
@@ -61,14 +77,14 @@ function Header({ cart, setData }) {
       {(useLocation().pathname == '/') &&
 
         (<div className="width-full bg-slate-700 flex justify-evenly items-center py-4 overflow-x-scroll">
-          <div className="items" onClick={() => { setData(items) }}>No Filter</div>
-          <div className="items" onClick={() => { filterCategory("mobile") }}>Mobiles</div>
-          <div className="items" onClick={() => { filterCategory("tablet") }}>Tablets</div>
-          <div className="items" onClick={() => { filterCategory("laptop") }}>Laptops</div>
-          <div className="items" onClick={() => { filterPrice(10000) }}>Under 10,000</div>
-          <div className="items" onClick={() => { filterPrice(20000) }}>Under 20,000</div>
-          <div className="items" onClick={() => { filterPrice(40000) }}>Under 40,000</div>
-          <div className="items" onClick={() => { filterPrice(200000) }}>Under 200,000</div>
+          <div className="items" onClick={ noFilterHandler }>No Filter</div>
+          <div className="items" onClick={() => { filterCategory("mobile",1) }}>Mobiles</div>
+          <div className="items" onClick={() => { filterCategory("tablet",2) && noFilterHandler()}}>Tablets</div>
+          <div className="items" onClick={() => { filterCategory("laptop",3) }}>Laptops</div>
+          <div className="items" onClick={() => { filterPrice(10000, 4) }}>Under 10,000</div>
+          <div className="items" onClick={() => { filterPrice(20000, 5) }}>Under 20,000</div>
+          <div className="items" onClick={() => { filterPrice(40000, 6) }}>Under 40,000</div>
+          <div className="items" onClick={() => { filterPrice(200000, 7) }}>Under 200,000</div>
         </div>)
       }
     </header>
